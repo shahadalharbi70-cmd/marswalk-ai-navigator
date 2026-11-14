@@ -164,6 +164,142 @@ body {
   transition: background 0.15s ease;
 }
 
+/* MarsWalk AI Navigator - New Theme */
+
+:root {
+  --mw-space: #080812;
+  --mw-violet: #9B7CFF;
+  --mw-coral: #FF776D;
+  --mw-rose: #F4B6A5;
+  --mw-cyan: #65E6E0;
+}
+
+/* Background */
+body {
+  background: var(--mw-space);
+  color: #ECE8F5;
+}
+
+/* Outer helmet */
+.helmet-outer-shell {
+  background: radial-gradient(
+    circle at center,
+    #24183F 0%,
+    #110C24 50%,
+    #080812 100%
+  );
+}
+
+/* Helmet frame */
+.helmet-circular-ring {
+  background: linear-gradient(
+    155deg,
+    #4A3B61,
+    #242039,
+    #11101F,
+    #28223D,
+    #4E3C58
+  );
+
+  box-shadow:
+    0 28px 100px rgba(0,0,0,0.86),
+    0 0 0 3px rgba(155,124,255,0.4),
+    0 0 42px rgba(155,124,255,0.18),
+    inset 0 2px 6px rgba(244,182,165,0.19);
+}
+
+/* Visor glass */
+.visor-viewport {
+  background: #291625;
+  border-color: rgba(155,124,255,0.4);
+}
+
+.visor-glass-overlay {
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 58%,
+      rgba(8,8,18,0.68) 100%
+    ),
+    linear-gradient(
+      160deg,
+      rgba(101,230,224,0.06),
+      transparent 45%,
+      rgba(255,119,109,0.05)
+    );
+}
+
+/* HUD panels */
+.telemetry-panel {
+  background: rgba(12,11,27,0.77);
+  border: 1px solid rgba(155,124,255,0.24);
+  border-radius: 9px;
+}
+
+/* Buttons */
+.cmd-btn {
+  background: rgba(36,27,63,0.88);
+  color: #ECE8F5;
+  border-color: rgba(155,124,255,0.42);
+  border-radius: 8px;
+}
+
+.cmd-btn:hover {
+  background: rgba(72,52,114,0.95);
+  border-color: var(--mw-cyan);
+}
+
+.cmd-btn.active {
+  background: linear-gradient(
+    100deg,
+    var(--mw-coral),
+    var(--mw-violet)
+  );
+  color: white;
+  border-color: var(--mw-violet);
+}
+
+/* Emergency button */
+.abort-btn {
+  background: rgba(115,40,58,0.87);
+  border: 1px solid var(--mw-coral);
+  border-radius: 8px;
+}
+
+.abort-btn:hover {
+  background: rgba(153,52,73,0.96);
+}
+
+/* Status indicator */
+.helmet-status-bar {
+  background: var(--mw-violet);
+}
+
+.helmet-status-bar.emergency {
+  background: var(--mw-coral);
+}
+
+/* HUD values */
+#headingVal,
+#distVal,
+#timeVal,
+#energyVal {
+  color: var(--mw-cyan);
+}
+
+#elevReadout,
+#helmet-alert {
+  color: var(--mw-rose);
+}
+
+#energyBar {
+  background: linear-gradient(
+    90deg,
+    var(--mw-cyan),
+    var(--mw-violet)
+  );
+}
+
 .abort-btn:hover {
   background: rgba(153, 27, 27, 0.96);
 }
