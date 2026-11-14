@@ -1,20 +1,15 @@
 {
   "metadata": {
     "region": "Jezero Crater Western Fan",
-    "mission": "Mars 2020 / MRO HiRISE DTM",
-    "boundingBox": {
-      "north": 18.435,
-      "south": 18.355,
-      "west": 77.410,
-      "east": 77.520
-    },
-    "origin": {
-      "lat": 18.435,
-      "lon": 77.410
-    },
+    "dataStatus": "SAMPLE 4x4 - illustrative values, not yet extracted from a DTM",
+    "boundingBox": { "north": 18.435, "south": 18.43365, "west": 77.410, "east": 77.41143 },
+    "origin": { "lat": 18.435, "lon": 77.410 },
     "cellSizeM": 20,
     "rows": 4,
-    "cols": 4
+    "cols": 4,
+    "indexBase": 0,
+    "rowOrder": "row 0 = north, col 0 = west",
+    "hazardThresholdsDeg": { "medium": 8, "high": 15, "impassable": 20 }
   },
   "elevation": [
     [-2550.2, -2548.0, -2542.1, -2535.5],
