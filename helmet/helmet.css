@@ -1,171 +1,3 @@
-/* css/helmet.css — MarsWalk AI Navigator (NASA Jezero Crater Helmet HUD) */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
-
-* {
-  box-sizing: border-box;
-  user-select: none;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  background: #050506;
-  color: #f4f4f5;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  overflow: hidden;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mono {
-  font-family: 'JetBrains Mono', monospace;
-}
-
-.helmet-outer-shell {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  background: radial-gradient(circle at 50% 50%, #18181b 0%, #09090b 75%, #030304 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px;
-}
-
-.helmet-circular-ring {
-  position: relative;
-  width: 99.4vw;
-  height: 99vh;
-  border-radius: 50% / 48%;
-  background: linear-gradient(160deg, #45454d 0%, #202024 24%, #0f0f12 52%, #232328 80%, #3d3d45 100%);
-  padding: clamp(9px, 1vw, 14px);
-  box-shadow:
-    0 35px 100px rgba(0, 0, 0, 0.96),
-    0 0 0 2px #18181b,
-    0 0 0 5px #27272a,
-    inset 0 2px 6px rgba(255, 255, 255, 0.2),
-    inset 0 -4px 10px rgba(0, 0, 0, 0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.helmet-gasket {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 50% / 48%;
-  padding: 4px;
-  background: #09090b;
-  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.95);
-}
-
-.helmet-status-bar {
-  position: absolute;
-  bottom: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 150px;
-  height: 3px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.45);
-  z-index: 30;
-  pointer-events: none;
-  transition: background 0.4s ease;
-}
-
-.helmet-status-bar.emergency {
-  background: #ef4444;
-}
-
-.visor-viewport {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 50% / 48%;
-  overflow: hidden;
-  background: #2b140c;
-  box-shadow:
-    inset 0 0 75px rgba(0, 0, 0, 0.72),
-    inset 0 2px 14px rgba(255, 255, 255, 0.16);
-  border: 1.5px solid rgba(255, 255, 255, 0.16);
-}
-
-#marsCanvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  z-index: 1;
-}
-
-.visor-glass-overlay {
-  position: absolute;
-  inset: 0;
-  border-radius: 50% / 48%;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse at 50% 48%, transparent 68%, rgba(5, 5, 6, 0.65) 100%),
-    radial-gradient(ellipse at 28% 12%, rgba(255, 255, 255, 0.08) 0%, transparent 36%);
-  z-index: 5;
-}
-
-.hud-layer {
-  position: relative;
-  z-index: 10;
-  width: 100%;
-  height: 100%;
-  padding: clamp(22px, 4vh, 38px) clamp(32px, 5.5vw, 68px);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  pointer-events: none;
-}
-
-.hud-interactive {
-  pointer-events: auto;
-}
-
-.telemetry-panel {
-  background: rgba(11, 12, 14, 0.72);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 7px;
-}
-
-.cmd-btn {
-  background: rgba(24, 24, 27, 0.86);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #f4f4f5;
-  border-radius: 6px;
-  transition: background 0.15s ease, border-color 0.15s ease;
-}
-
-.cmd-btn:hover {
-  background: rgba(39, 39, 42, 0.96);
-  border-color: rgba(255, 255, 255, 0.38);
-}
-
-.cmd-btn.active {
-  background: rgba(244, 244, 245, 0.94);
-  color: #09090b;
-  border-color: #ffffff;
-}
-
-.abort-btn {
-  background: rgba(127, 29, 29, 0.88);
-  border: 1px solid rgba(248, 113, 113, 0.48);
-  border-radius: 6px;
-  transition: background 0.15s ease;
-}
-
-/* MarsWalk AI Navigator - New Theme */
-
 :root {
   --mw-space: #080812;
   --mw-violet: #9B7CFF;
@@ -174,23 +6,20 @@ body {
   --mw-cyan: #65E6E0;
 }
 
-/* Background */
 body {
-  background: var(--mw-space);
-  color: #ECE8F5;
+  background: var(--mw-space) !important;
+  color: #ECE8F5 !important;
 }
 
-/* Outer helmet */
 .helmet-outer-shell {
   background: radial-gradient(
     circle at center,
     #24183F 0%,
     #110C24 50%,
     #080812 100%
-  );
+  ) !important;
 }
 
-/* Helmet frame */
 .helmet-circular-ring {
   background: linear-gradient(
     155deg,
@@ -199,19 +28,17 @@ body {
     #11101F,
     #28223D,
     #4E3C58
-  );
-
+  ) !important;
   box-shadow:
-    0 28px 100px rgba(0,0,0,0.86),
-    0 0 0 3px rgba(155,124,255,0.4),
-    0 0 42px rgba(155,124,255,0.18),
-    inset 0 2px 6px rgba(244,182,165,0.19);
+    0 28px 100px rgba(0, 0, 0, 0.86),
+    0 0 0 3px rgba(155, 124, 255, 0.4),
+    0 0 42px rgba(155, 124, 255, 0.18),
+    inset 0 2px 6px rgba(244, 182, 165, 0.19) !important;
 }
 
-/* Visor glass */
 .visor-viewport {
-  background: #291625;
-  border-color: rgba(155,124,255,0.4);
+  border-color: rgba(155, 124, 255, 0.4) !important;
+  background: #291625 !important;
 }
 
 .visor-glass-overlay {
@@ -219,34 +46,40 @@ body {
     radial-gradient(
       ellipse at center,
       transparent 58%,
-      rgba(8,8,18,0.68) 100%
+      rgba(8, 8, 18, 0.68) 100%
     ),
     linear-gradient(
       160deg,
-      rgba(101,230,224,0.06),
+      rgba(101, 230, 224, 0.06),
       transparent 45%,
-      rgba(255,119,109,0.05)
-    );
+      rgba(255, 119, 109, 0.05)
+    ) !important;
 }
 
-/* HUD panels */
+.helmet-status-bar {
+  background: var(--mw-violet) !important;
+}
+
+.helmet-status-bar.emergency {
+  background: var(--mw-coral) !important;
+}
+
 .telemetry-panel {
-  background: rgba(12,11,27,0.77);
-  border: 1px solid rgba(155,124,255,0.24);
-  border-radius: 9px;
+  background: rgba(12, 11, 27, 0.77) !important;
+  border: 1px solid rgba(155, 124, 255, 0.24) !important;
+  border-radius: 9px !important;
 }
 
-/* Buttons */
 .cmd-btn {
-  background: rgba(36,27,63,0.88);
-  color: #ECE8F5;
-  border-color: rgba(155,124,255,0.42);
-  border-radius: 8px;
+  background: rgba(36, 27, 63, 0.88) !important;
+  border: 1px solid rgba(155, 124, 255, 0.42) !important;
+  color: #ECE8F5 !important;
+  border-radius: 8px !important;
 }
 
 .cmd-btn:hover {
-  background: rgba(72,52,114,0.95);
-  border-color: var(--mw-cyan);
+  background: rgba(72, 52, 114, 0.95) !important;
+  border-color: var(--mw-cyan) !important;
 }
 
 .cmd-btn.active {
@@ -254,42 +87,31 @@ body {
     100deg,
     var(--mw-coral),
     var(--mw-violet)
-  );
-  color: white;
-  border-color: var(--mw-violet);
+  ) !important;
+  color: white !important;
+  border-color: var(--mw-violet) !important;
 }
 
-/* Emergency button */
 .abort-btn {
-  background: rgba(115,40,58,0.87);
-  border: 1px solid var(--mw-coral);
-  border-radius: 8px;
+  background: rgba(115, 40, 58, 0.87) !important;
+  border: 1px solid var(--mw-coral) !important;
+  border-radius: 8px !important;
 }
 
 .abort-btn:hover {
-  background: rgba(153,52,73,0.96);
+  background: rgba(153, 52, 73, 0.96) !important;
 }
 
-/* Status indicator */
-.helmet-status-bar {
-  background: var(--mw-violet);
-}
-
-.helmet-status-bar.emergency {
-  background: var(--mw-coral);
-}
-
-/* HUD values */
 #headingVal,
 #distVal,
 #timeVal,
 #energyVal {
-  color: var(--mw-cyan);
+  color: var(--mw-cyan) !important;
 }
 
 #elevReadout,
 #helmet-alert {
-  color: var(--mw-rose);
+  color: var(--mw-rose) !important;
 }
 
 #energyBar {
@@ -297,9 +119,5 @@ body {
     90deg,
     var(--mw-cyan),
     var(--mw-violet)
-  );
-}
-
-.abort-btn:hover {
-  background: rgba(153, 27, 27, 0.96);
+  ) !important;
 }
