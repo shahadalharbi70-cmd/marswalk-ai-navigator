@@ -147,3 +147,36 @@ button {
 #helmet-view h3 svg {
     stroke: #39c5bb;
 }
+
+/* Elegant Mission Button */
+
+.mission-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 26px;
+    min-height: 48px;
+    border: none;
+    border-radius: 12px;
+    background: #ff844b;
+    color: #101827;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.mission-btn svg {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    stroke: currentColor;
+    stroke-width: 2;
+    flex-shrink: 0;
+}
+
+.mission-btn:hover {
+    background: #ff9c6b;
+    transform: translateY(-2px);
+}
