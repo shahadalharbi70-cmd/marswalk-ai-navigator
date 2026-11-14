@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MarsWalk AI Navigator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h1>🚀 MarsWalk AI Navigator</h1>
+    <p>Explore Mars. Return Safely.</p>
+
+    <h2>Mission Planner</h2>
+
+    <h3>Starting Point</h3>
+    <input id="start" type="text"
+           placeholder="Enter starting point">
+
+    <h3>Scientific Destination</h3>
+    <select id="destination">
+        <option value="">Select destination</option>
+        <option value="Test Site A">Test Site A</option>
+        <option value="Test Site B">Test Site B</option>
+    </select>
+
+    <h3>Available Mission Time</h3>
+    <input id="time" type="number"
+           min="1" placeholder="Minutes">
+
+    <br>
+    <button id="planButton">Plan Mission 🚀</button>
+
+    
+<h2>🗺️ Interactive Mars Map</h2>
+
+<div id="mars-map">
+    <div class="map-placeholder">
+        <h3>🔴 Mars Exploration Map</h3>
+        <p>Interactive Mars map coming soon</p>
+        <p>NASA terrain data will be displayed here.</p>
+    </div>
+</div>
+
+
+    
+<h2>🤖 AI Navigation</h2>
+
+<div class="navigation-panel">
+    <h3>Mission Results</h3>
+    <p id="result">Mission results will appear here.</p>
+
+    <div class="navigation-details">
+        <p>📍 Distance: <span id="distance">--</span></p>
+        <p>⏱️ Travel Time: <span id="travel-time">--</span></p>
+        <p>⚠️ Risk Level: <span id="risk-level">--</span></p>
+        <p>🚀 Mission Status: <span id="mission-status">--</span></p>
+    </div>
+</div>
+
+
+    
+<h2>🪖 Smart Helmet</h2>
+
+<div id="helmet-view">
+    <h3>🪖 Astronaut Helmet HUD</h3>
+    <p>Navigation: <span id="helmet-direction">--</span></p>
+    <p>Distance Remaining: <span id="helmet-distance">--</span></p>
+    <p>Safety Alert: <span id="helmet-alert">Waiting for mission</span></p>
+    <button id="return-button" type="button">
+        Emergency Return
+    </button>
+    <p id="return-message"></p>
+</div>
+
+
+    <script src="app.js"></script>
+
+</body>
+</html>
