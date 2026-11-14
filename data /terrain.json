@@ -1,44 +1,37 @@
 {
   "metadata": {
     "region": "Jezero Crater Western Fan",
-    "mission": "Mars 2020 (MRO HiRISE/CTX DTM)",
-    "gridResolutionMeters": 20.0,
+    "mission": "Mars 2020 / MRO HiRISE DTM",
     "boundingBox": {
       "north": 18.435,
       "south": 18.355,
       "west": 77.410,
       "east": 77.520
     },
-    "dimensions": {
-      "rows": 4,
-      "cols": 4
+    "origin": {
+      "lat": 18.435,
+      "lon": 77.410
     },
-    "note": "Optimized 20m grid resolution for interactive map and pathfinding heuristic parsing."
+    "cellSizeM": 20,
+    "rows": 4,
+    "cols": 4
   },
-  "terrainGrid": [
-    [
-      { "row": 0, "col": 0, "elevation": -2550.2, "slope": 4.5, "hazardLevel": "low" },
-      { "row": 0, "col": 1, "elevation": -2548.0, "slope": 7.2, "hazardLevel": "low" },
-      { "row": 0, "col": 2, "elevation": -2542.1, "slope": 12.5, "hazardLevel": "medium" },
-      { "row": 0, "col": 3, "elevation": -2535.5, "slope": 18.1, "hazardLevel": "high" }
-    ],
-    [
-      { "row": 1, "col": 0, "elevation": -2552.5, "slope": 3.1, "hazardLevel": "low" },
-      { "row": 1, "col": 1, "elevation": -2551.0, "slope": 6.0, "hazardLevel": "low" },
-      { "row": 1, "col": 2, "elevation": -2546.4, "slope": 10.3, "hazardLevel": "medium" },
-      { "row": 1, "col": 3, "elevation": -2540.2, "slope": 16.0, "hazardLevel": "high" }
-    ],
-    [
-      { "row": 2, "col": 0, "elevation": -2555.0, "slope": 2.0, "hazardLevel": "low" },
-      { "row": 2, "col": 1, "elevation": -2553.8, "slope": 4.1, "hazardLevel": "low" },
-      { "row": 2, "col": 2, "elevation": -2550.0, "slope": 8.0, "hazardLevel": "low" },
-      { "row": 2, "col": 3, "elevation": -2545.1, "slope": 14.2, "hazardLevel": "medium" }
-    ],
-    [
-      { "row": 3, "col": 0, "elevation": -2557.0, "slope": 1.0, "hazardLevel": "low" },
-      { "row": 3, "col": 1, "elevation": -2556.5, "slope": 2.2, "hazardLevel": "low" },
-      { "row": 3, "col": 2, "elevation": -2554.0, "slope": 5.8, "hazardLevel": "low" },
-      { "row": 3, "col": 3, "elevation": -2550.5, "slope": 9.1, "hazardLevel": "low" }
-    ]
+  "elevation": [
+    [-2550.2, -2548.0, -2542.1, -2535.5],
+    [-2552.5, -2551.0, -2546.4, -2540.2],
+    [-2555.0, -2553.8, -2550.0, -2545.1],
+    [-2557.0, -2556.5, -2554.0, -2550.5]
+  ],
+  "slope": [
+    [4.5, 7.2, 12.5, 18.1],
+    [3.1, 6.0, 10.3, 21.5],
+    [2.0, 4.1, 8.5, 16.2],
+    [1.0, 2.2, 5.8, 22.0]
+  ],
+  "hazardLevel": [
+    ["low", "low", "medium", "high"],
+    ["low", "low", "medium", "impassable"],
+    ["low", "low", "medium", "high"],
+    ["low", "low", "low", "impassable"]
   ]
 }
