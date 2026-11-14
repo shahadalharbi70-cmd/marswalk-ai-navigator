@@ -232,13 +232,11 @@ function renderFrame(now) {
 
   if (!canvas || !ctx) return;
 
-  // Stop drawing when the page is hidden
   if (document.hidden) {
     lastTimestamp = now;
     return;
   }
 
-  // 30 FPS while walking, 15 FPS while idle
   const targetFPS = state.walking ? 30 : 15;
   const frameInterval = 1000 / targetFPS;
 
@@ -322,4 +320,330 @@ function renderFrame(now) {
   ctx.fillStyle = groundGrad;
   ctx.fillRect(0, horizonY, w, h - horizonY);
 
-  const forwardScroll = (state.progress * 4.
+  const forwardScroll = (state.progress * 4.5) % 1;
+
+  ctx.save();
+  for (let i = 0; i < 16; i++) {
+    const z = ((i / 16) + forwardScroll * 0.25) % 1;
+    const persp = Math.pow(z, 1.75);
+    const ry = horizonY + persp * (h - horizonY);
+    ctx.strokeStyle = `rgba(42, 16, 8, ${0.15 + persp * 0.28})`;
+    ctx.lineWidth = 1 + persp * 2.5;
+    ctx.beginPath();
+    for (let x = 0; x <= w; x += 40) {
+      const wave = Math.sin(x * 0.015 + i * 1.4 + swayX * 0.05) * (3 * persp);
+      if (x === 0) ctx.moveTo(x, ry + wave);
+      else ctx.lineTo(x, ry + wave);
+    }
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  minorCraters.forEach((mc) => {
+    const z = (mc.z + forwardScroll * 0.65) % 1;
+    const persp = Math.pow(z, 1.8);
+    const cy = horizonY + persp * (h - horizonY);
+    const cx = w * 0.5 + (mc.x - 0.5) * w * (0.45 + persp * 1.3) + swayX * persp;
+    const rx = mc.rx * (0.25 + persp * 1.4);
+    const ry = mc.ry * (0.25 + persp * 1.4);
+    drawDetailedCrater(cx, cy, rx, ry, false);
+  });
+
+  pebbles.forEach((p) => {
+    const z = (p.z + forwardScroll) % 1;
+    const persp = Math.pow(z, 1.85);
+    const py = horizonY + persp * (h - horizonY);
+    const px = w * 0.5 + (p.x - 0.5) * w * (0.4 + persp * 1.45) + swayX * persp;
+    const pr = p.r * (0.3 + persp * 1.2);
+    ctx.fillStyle = "rgba(38, 15, 8, 0.55)";
+    ctx.fillRect(px, py, pr * 1.4, pr * 0.8);
+  });
+
+  boulders.forEach((b) => {
+    const z = (b.z + forwardScroll) % 1;
+    const persp = Math.pow(z, 1.85);
+    const ry = horizonY + persp * (h - horizonY);
+    const rx = w * 0.5 + (b.x - 0.5) * w * (0.35 + persp * 1.45) + swayX * persp;
+    const rw = b.size * (0.25 + persp * 1.55);
+    const rh = rw * 0.55;
+
+    ctx.fillStyle = "rgba(22, 8, 4, 0.58)";
+    ctx.beginPath();
+    ctx.ellipse(rx - rw * 0.45, ry + rh * 0.25, rw * 1.15, rh * 0.45, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = b.color;
+    ctx.beginPath();
+    ctx.moveTo(rx - rw, ry + rh * 0.2);
+    ctx.lineTo(rx - rw * 0.65, ry - rh * 0.75);
+    ctx.lineTo(rx + rw * 0.25, ry - rh * 0.9);
+    ctx.lineTo(rx + rw, ry - rh * 0.1);
+    ctx.lineTo(rx + rw * 0.7, ry + rh * 0.35);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = "rgba(186, 102, 68, 0.42)";
+    ctx.beginPath();
+    ctx.moveTo(rx - rw * 0.2, ry - rh * 0.85);
+    ctx.lineTo(rx + rw * 0.25, ry - rh * 0.9);
+    ctx.lineTo(rx + rw, ry - rh * 0.1);
+    ctx.lineTo(rx + rw * 0.1, ry - rh * 0.15);
+    ctx.closePath();
+    ctx.fill();
+  });
+
+  if (!state.emergency) {
+    const craterApproach = ((state.progress * 1.25) % 1);
+    const cPersp = 0.22 + Math.pow(craterApproach, 1.55) * 0.65;
+    const craterY = horizonY + cPersp * (h - horizonY);
+    const craterX = w * 0.5 - state.curveOffset * cPersp * 1.35 + swayX * cPersp;
+    const craterRx = 145 * cPersp;
+    const craterRy = 46 * cPersp;
+
+    drawDetailedCrater(craterX, craterY, craterRx, craterRy, true);
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.ellipse(craterX, craterY, craterRx * 1.08, craterRy * 1.12, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = state.rerouted
+      ? "rgba(255, 255, 255, 0.38)"
+      : "rgba(245, 158, 11, 0.85)";
+    ctx.lineWidth = 1.6;
+    ctx.setLineDash([6, 5]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    if (cPersp > 0.26) {
+      ctx.font = `600 ${Math.max(10, Math.round(11 * cPersp))}px "JetBrains Mono", monospace`;
+      ctx.fillStyle = state.rerouted ? "rgba(255,255,255,0.7)" : "#fcd34d";
+      ctx.textAlign = "center";
+      ctx.fillText("BELVA CRATER DROP-OFF • 27°", craterX, craterY - craterRy - 10);
+    }
+    ctx.restore();
+  }
+
+  drawDemElevationLadder(w, h, state.currentElev, bobY);
+  drawOpticalPitchReticle(w, h, horizonY, swayX);
+  drawCollimatedTrajectoryLines(w, h, horizonY, swayX);
+}
+
+function drawDetailedCrater(cx, cy, rx, ry, isPrimaryHazard) {
+  ctx.save();
+  ctx.beginPath();
+  ctx.ellipse(cx, cy, rx * 1.16, ry * 1.2, 0, 0, Math.PI * 2);
+  ctx.fillStyle = isPrimaryHazard ? "rgba(158, 84, 52, 0.65)" : "rgba(138, 70, 42, 0.45)";
+  ctx.fill();
+
+  const pitGrad = ctx.createRadialGradient(
+    cx - rx * 0.22,
+    cy - ry * 0.2,
+    rx * 0.08,
+    cx,
+    cy,
+    rx
+  );
+  pitGrad.addColorStop(0, "#120603");
+  pitGrad.addColorStop(0.62, "#290f07");
+  pitGrad.addColorStop(0.88, "#4d2113");
+  pitGrad.addColorStop(1, "#7d3d25");
+
+  ctx.beginPath();
+  ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+  ctx.fillStyle = pitGrad;
+  ctx.fill();
+
+  ctx.strokeStyle = "rgba(205, 122, 84, 0.45)";
+  ctx.lineWidth = Math.max(1, rx * 0.025);
+  ctx.beginPath();
+  ctx.ellipse(cx, cy, rx * 0.94, ry * 0.92, 0, Math.PI * 1.1, Math.PI * 1.9);
+  ctx.stroke();
+
+  if (isPrimaryHazard && rx > 45) {
+    ctx.fillStyle = "#1f0b05";
+    ctx.beginPath();
+    ctx.ellipse(cx - rx * 0.25, cy + ry * 0.15, rx * 0.08, ry * 0.09, 0, 0, Math.PI * 2);
+    ctx.ellipse(cx + rx * 0.18, cy - ry * 0.1, rx * 0.06, ry * 0.07, 0, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+function drawSedimentaryRidge(w, horizonY, shiftX, maxHeight, bodyColor, strataColor, freq, seed) {
+  ctx.save();
+  ctx.fillStyle = bodyColor;
+  ctx.beginPath();
+  ctx.moveTo(0, horizonY + 2);
+  for (let x = 0; x <= w; x += 10) {
+    const worldX = x - shiftX;
+    const ridge =
+      Math.sin(worldX * freq + seed) * 0.5 +
+      Math.cos(worldX * freq * 2.4 + seed * 1.7) * 0.3 +
+      Math.sin(worldX * freq * 5.3) * 0.2;
+    const y = horizonY - Math.max(8, (ridge + 1) * 0.5 * maxHeight);
+    ctx.lineTo(x, y);
+  }
+  ctx.lineTo(w, horizonY + 2);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.strokeStyle = strataColor;
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  for (let x = 0; x <= w; x += 14) {
+    const worldX = x - shiftX;
+    const ridge =
+      Math.sin(worldX * freq + seed) * 0.5 +
+      Math.cos(worldX * freq * 2.4 + seed * 1.7) * 0.3;
+    const y = horizonY - Math.max(4, (ridge + 1) * 0.32 * maxHeight);
+    if (x === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawJezeroButteAndPin(x, horizonY, lm) {
+  ctx.save();
+  ctx.fillStyle = "#4d2214";
+  ctx.beginPath();
+  ctx.moveTo(x - 68, horizonY + 1);
+  ctx.lineTo(x - 34, horizonY - lm.height);
+  ctx.lineTo(x + 34, horizonY - lm.height);
+  ctx.lineTo(x + 68, horizonY + 1);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.fillStyle = "rgba(176, 94, 60, 0.38)";
+  ctx.beginPath();
+  ctx.moveTo(x + 6, horizonY - lm.height);
+  ctx.lineTo(x + 34, horizonY - lm.height);
+  ctx.lineTo(x + 68, horizonY + 1);
+  ctx.lineTo(x + 14, horizonY + 1);
+  ctx.closePath();
+  ctx.fill();
+
+  const pinTopY = horizonY - lm.height - 18;
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.45)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(x, horizonY - lm.height);
+  ctx.lineTo(x, pinTopY + 4);
+  ctx.stroke();
+
+  ctx.font = '500 9.5px "JetBrains Mono", monospace';
+  ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+  ctx.textAlign = "center";
+  ctx.fillText(`${lm.name} [${lm.elev}]`, x, pinTopY);
+  ctx.restore();
+}
+
+function drawLanderSite(cx, cy) {
+  ctx.save();
+  ctx.fillStyle = "#e4e4e7";
+  ctx.beginPath();
+  ctx.arc(cx, cy, 22, Math.PI, 0);
+  ctx.fill();
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.7)";
+  ctx.strokeRect(cx - 92, cy - 48, 184, 20);
+  ctx.font = '600 10px "JetBrains Mono", monospace';
+  ctx.fillStyle = "#ffffff";
+  ctx.textAlign = "center";
+  ctx.fillText("OCTAVIA E. BUTLER LANDING", cx, cy - 35);
+  ctx.restore();
+}
+
+function drawDemElevationLadder(w, h, currentElev, bobY) {
+  ctx.save();
+  const ladderX = Math.max(24, w * 0.045);
+  const midY = h * 0.5 + bobY * 0.3;
+
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.22)";
+  ctx.fillStyle = "rgba(255, 255, 255, 0.58)";
+  ctx.font = '400 8.5px "JetBrains Mono", monospace';
+  ctx.textAlign = "left";
+
+  for (let i = -3; i <= 3; i++) {
+    const y = midY + i * 24;
+    const elevMark = Math.round(currentElev - i * 10);
+    ctx.beginPath();
+    ctx.moveTo(ladderX, y);
+    ctx.lineTo(ladderX + (i === 0 ? 10 : 5), y);
+    ctx.stroke();
+
+    if (i === 0 || i === -2 || i === 2) {
+      ctx.fillText(`${elevMark}m`, ladderX + 13, y + 3);
+    }
+  }
+  ctx.restore();
+}
+
+function drawOpticalPitchReticle(w, h, horizonY, swayX) {
+  ctx.save();
+  const cx = w * 0.5 + swayX * 0.3;
+
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.22)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(cx - 170, horizonY);
+  ctx.lineTo(cx - 65, horizonY);
+  ctx.moveTo(cx + 65, horizonY);
+  ctx.lineTo(cx + 170, horizonY);
+  ctx.stroke();
+
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.38)";
+  ctx.beginPath();
+  ctx.moveTo(cx - 10, horizonY);
+  ctx.lineTo(cx + 10, horizonY);
+  ctx.moveTo(cx, horizonY - 10);
+  ctx.lineTo(cx, horizonY + 10);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawCollimatedTrajectoryLines(w, h, horizonY, swayX) {
+  const startY = h * 0.90;
+  const endY = horizonY + (h - horizonY) * 0.15;
+  const lineColor = state.emergency
+    ? "rgba(248, 113, 113, 0.72)"
+    : "rgba(255, 255, 255, 0.62)";
+
+  ctx.save();
+  ctx.strokeStyle = lineColor;
+  ctx.lineWidth = 1.5;
+
+  [-1, 1].forEach((side) => {
+    ctx.beginPath();
+    for (let i = 0; i <= 24; i++) {
+      const t = i / 24;
+      const y = startY + (endY - startY) * Math.pow(t, 0.82);
+      const curve = Math.sin(t * Math.PI) * state.curveOffset * (1 - t * 0.35);
+      const halfW = (1 - t * 0.80) * 54;
+      const x = w * 0.5 + curve + swayX * (1 - t) + side * halfW;
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  });
+
+  const pulseOffset = (performance.now() / 900) % 1;
+  for (let i = 0; i < 6; i++) {
+    const t = (i + pulseOffset) / 6;
+    if (t > 0.94) continue;
+    const y = startY + (endY - startY) * Math.pow(t, 0.82);
+    const curve = Math.sin(t * Math.PI) * state.curveOffset * (1 - t * 0.35);
+    const halfW = (1 - t * 0.80) * 54;
+    const x = w * 0.5 + curve + swayX * (1 - t);
+
+    ctx.strokeStyle = state.emergency
+      ? `rgba(248, 113, 113, ${0.48 * (1 - t)})`
+      : `rgba(255, 255, 255, ${0.45 * (1 - t)})`;
+    ctx.beginPath();
+    ctx.moveTo(x - halfW, y);
+    ctx.lineTo(x + halfW, y);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+resetSimulation();
+requestAnimationFrame(renderFrame);
