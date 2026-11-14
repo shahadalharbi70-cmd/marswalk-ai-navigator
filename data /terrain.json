@@ -1,12 +1,44 @@
 {
   "metadata": {
     "region": "Jezero Crater Western Fan",
-    "mission": "Mars 2020 (MRO HiRISE/CTX DTM)"
+    "mission": "Mars 2020 (MRO HiRISE/CTX DTM)",
+    "gridResolutionMeters": 20.0,
+    "boundingBox": {
+      "north": 18.435,
+      "south": 18.355,
+      "west": 77.410,
+      "east": 77.520
+    },
+    "dimensions": {
+      "rows": 4,
+      "cols": 4
+    },
+    "note": "Optimized 20m grid resolution for interactive map and pathfinding heuristic parsing."
   },
-  "grid": [
+  "terrainGrid": [
     [
       { "row": 0, "col": 0, "elevation": -2550.2, "slope": 4.5, "hazardLevel": "low" },
-      { "row": 0, "col": 1, "elevation": -2548.0, "slope": 6.2, "hazardLevel": "low" }
+      { "row": 0, "col": 1, "elevation": -2548.0, "slope": 7.2, "hazardLevel": "low" },
+      { "row": 0, "col": 2, "elevation": -2542.1, "slope": 12.5, "hazardLevel": "medium" },
+      { "row": 0, "col": 3, "elevation": -2535.5, "slope": 18.1, "hazardLevel": "high" }
+    ],
+    [
+      { "row": 1, "col": 0, "elevation": -2552.5, "slope": 3.1, "hazardLevel": "low" },
+      { "row": 1, "col": 1, "elevation": -2551.0, "slope": 6.0, "hazardLevel": "low" },
+      { "row": 1, "col": 2, "elevation": -2546.4, "slope": 10.3, "hazardLevel": "medium" },
+      { "row": 1, "col": 3, "elevation": -2540.2, "slope": 16.0, "hazardLevel": "high" }
+    ],
+    [
+      { "row": 2, "col": 0, "elevation": -2555.0, "slope": 2.0, "hazardLevel": "low" },
+      { "row": 2, "col": 1, "elevation": -2553.8, "slope": 4.1, "hazardLevel": "low" },
+      { "row": 2, "col": 2, "elevation": -2550.0, "slope": 8.0, "hazardLevel": "low" },
+      { "row": 2, "col": 3, "elevation": -2545.1, "slope": 14.2, "hazardLevel": "medium" }
+    ],
+    [
+      { "row": 3, "col": 0, "elevation": -2557.0, "slope": 1.0, "hazardLevel": "low" },
+      { "row": 3, "col": 1, "elevation": -2556.5, "slope": 2.2, "hazardLevel": "low" },
+      { "row": 3, "col": 2, "elevation": -2554.0, "slope": 5.8, "hazardLevel": "low" },
+      { "row": 3, "col": 3, "elevation": -2550.5, "slope": 9.1, "hazardLevel": "low" }
     ]
   ]
 }
