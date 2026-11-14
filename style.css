@@ -132,3 +132,18 @@ button {
 #helmet-view p {
     color: #e0f7f5;
 }
+
+/* Navigation Card Icons */
+
+.navigation-details svg {
+    width: 19px;
+    height: 19px;
+    vertical-align: middle;
+    margin-right: 8px;
+    stroke: #ff844b;
+    stroke-width: 1.8;
+}
+
+#helmet-view h3 svg {
+    stroke: #39c5bb;
+}
